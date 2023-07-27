@@ -1,0 +1,11 @@
+env
+.env
+env/
+/env
+.vscode
+/.vscode
+vscode/
+db.sqlite3
+.idea
+/.idea
+.idea/
