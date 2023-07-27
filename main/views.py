@@ -222,7 +222,7 @@ def final_url(request):
 
             if not JobDetail.objects.filter(job_link=jobs).exists():
                 values = JobDetail.objects.create(job_title=job_title, job_address=location, job_created_at=posted_date,
-                                                  type=job_types, job_description_format=job_description,
+                                                  type=job_types, job_description=job_description,
                                                   company_name=company_name, company_website=company_website,
                                                   price_per_hour=price_per_hour, salary=salary,company_logo=logo_url,
                                                   category=fcategory, job_link=jobs, wpjobboard_am_data=apply_link, company_location=company_location)

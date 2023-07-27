@@ -10,8 +10,8 @@ class Links(models.Model):
 
 
 class JobDetail(models.Model):
-    job_title = models.CharField(max_length=1000, blank=True, null=True)
     company_id = models.CharField(max_length=300, blank=True, null=True)
+    job_title = models.CharField(max_length=1000, blank=True, null=True)
     is_approved = models.IntegerField(default=1)
     is_active = models.IntegerField(default=1)
     is_filled = models.IntegerField(default=0)
@@ -46,7 +46,7 @@ class JobDetail(models.Model):
     twitter_link = models.CharField(max_length=1000, blank=True, null=True)
     linkedin_link = models.CharField(max_length=1000, blank=True, null=True)
     facebook_link = models.CharField(max_length=1000, blank=True, null=True)
-    job_description_format = RichTextField(default=None, blank=True, null=True) 
+    job_description = RichTextField(default=None, blank=True, null=True) 
     
     price_per_hour = models.CharField(max_length=1000, blank=True, null=True)
     salary = models.CharField(max_length=1000, blank=True, null=True)
