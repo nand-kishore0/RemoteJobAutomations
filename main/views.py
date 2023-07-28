@@ -12,6 +12,7 @@ from .models import Links, JobDetail
 
 
 # Create your views here.
+###################################Home Pages/ Root Domain#######################################
 
 def request_url(request):
     url = "https://remote.co/remote-jobs/"
@@ -108,9 +109,13 @@ def request_url(request):
         "Salary": salary,
         "salary_element_test": salary_test,
     }
-    print(data)
     return JsonResponse(data)
 
+
+
+
+
+########################################working Code..#################################
 
 # Your imports and other parts of the code remain the same
 
@@ -159,7 +164,7 @@ def final_url(request):
             # Extracting location
             # location_element = soup_job.select_one('div.location_sm strong')
             location_element = soup_job.select_one('div.location_sm')
-            location = location_element.get_text().strip() if location_element else "Not Available"
+            location = location_element.get_text().strip().replace("Location:", "") if location_element else "Not Available"
 
             # Extracting Salary
             salary_element = soup_job.select_one('div.col-10 col-sm-11 pl-1')
@@ -175,7 +180,7 @@ def final_url(request):
             for job in job_type:
                 job_value.add(job.get_text())
             job_types_str = str(job_value)
-            job_types = job_types_str.replace("{", '').replace("}", '')
+            job_types = job_types_str.replace("{", '').replace("}", '').replace("'", "")
            
            #job Description 
             job_description_element = soup_job.select_one('div.job_description')
@@ -212,8 +217,10 @@ def final_url(request):
             salary_element_test = soup_job.select_one('p:contains("Rate/Salary:")')
             salary_test = salary_element_test.get_text().replace("Rate/Salary:",
                                                                  "").strip() if salary_element_test else "Not Available"
+            
             apply_link_element = soup_job.find('a', id='apply_button_gtm')
-            apply_link = apply_link_element.get('href') if apply_link_element else "Not Available"
+            apply_url = apply_link_element.get('href') if apply_link_element else "Not Available"
+            apply_link = 'a:1:{s:3:"url";s:' + str(len(apply_url)) + ':"' + apply_url + '";}'
 
             category_link = category.replace("https://remote.co/remote-jobs/", '')
             fcategory = category_link.replace('/', '')
@@ -239,6 +246,9 @@ def final_url(request):
 
 
 
+
+
+#####################################scrapy##################################################
 
 import scrapy
 from .models import JobDetail
