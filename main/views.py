@@ -182,9 +182,12 @@ def final_url(request):
             job_types_str = str(job_value)
             job_types = job_types_str.replace("{", '').replace("}", '').replace("'", "")
            
-           #job Description 
+           #job Description
             job_description_element = soup_job.select_one('div.job_description')
-            job_description = job_description_element.get_text() if job_description_element else "Not Available"
+            job_description = str(job_description_element) if job_description_element else "Not Available"
+
+            # job_description_element = soup_job.select_one('div.job_description')
+            # job_description = job_description_element.findAll() if job_description_element else "Not Available"
 
             # Extracting company name and company website link
             company_name_element = soup_job.select_one('div.company_sm div.co_name strong')
@@ -198,19 +201,7 @@ def final_url(request):
             logo_tag = soup_job.find_all('img', class_='job_company_logo')
             for logos in logo_tag:
                 logo_url = logos['src']
-                # print(logo_url)
-                # print("========================================================")
-            # print("Logo_tag", logo_tag)
 
-            # if logo_tag:
-            #     logo_url = logo_tag['src']
-            # else:
-            #     logo_url = "Not Available"
-            # logo_url = company_logo['src'] if company_logo else "Not Available"
-            # logo_url = soup_job.get('a', class_='job_company_logo')
-            # company_name = soup_job.css('img.job_company_logo::attr(alt)').get()
-            # logo_url = "https://remoteco.s3.amazonaws.com/wp-content/uploads/2023/06/09213220/Red-River-Logo-150x150.jpeg"
-            # Extracting job price per hour
             price_per_hour_element = soup_job.select_one('div.job_description strong:contains("$")')
             price_per_hour = price_per_hour_element.get_text() if price_per_hour_element else "Not Available"
 
