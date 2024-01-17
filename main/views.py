@@ -112,9 +112,6 @@ def request_url(request):
     return JsonResponse(data)
 
 
-
-
-
 ########################################working Code..#################################
 
 # Your imports and other parts of the code remain the same
@@ -164,7 +161,8 @@ def final_url(request):
             # Extracting location
             # location_element = soup_job.select_one('div.location_sm strong')
             location_element = soup_job.select_one('div.location_sm')
-            location = location_element.get_text().strip().replace("Location:", "") if location_element else "Not Available"
+            location = location_element.get_text().strip().replace("Location:",
+                                                                   "") if location_element else "Not Available"
 
             # Extracting Salary
             salary_element = soup_job.select_one('div.col-10 col-sm-11 pl-1')
@@ -174,15 +172,15 @@ def final_url(request):
             posted_date_element = soup_job.select_one('div.date_tags time')
             posted_date = posted_date_element['datetime'] if posted_date_element else "Not Available"
 
-            #get job types 
+            # get job types
             job_value = set()
             job_type = soup_job.find_all('a', class_='job_flag')
             for job in job_type:
                 job_value.add(job.get_text())
             job_types_str = str(job_value)
             job_types = job_types_str.replace("{", '').replace("}", '').replace("'", "")
-           
-           #job Description
+
+            # job Description
             job_description_element = soup_job.select_one('div.job_description')
             job_description = str(job_description_element) if job_description_element else "Not Available"
 
@@ -196,7 +194,7 @@ def final_url(request):
             company_website_element = soup_job.select_one('div.company_sm div.links_sm a[href]')
             company_website = company_website_element['href'] if company_website_element else "Not Available"
 
-
+            print(company_website, "Company Website Has been working !!")
 
             logo_tag = soup_job.find_all('img', class_='job_company_logo')
             for logos in logo_tag:
@@ -208,10 +206,12 @@ def final_url(request):
             salary_element_test = soup_job.select_one('p:contains("Rate/Salary:")')
             salary_test = salary_element_test.get_text().replace("Rate/Salary:",
                                                                  "").strip() if salary_element_test else "Not Available"
-            
-            apply_link_element = soup_job.find('a', id='apply_button_gtm')
+
+            apply_link_element = soup_job.find('a', id='applyLink')
             apply_url = apply_link_element.get('href') if apply_link_element else "Not Available"
             apply_link = 'a:1:{s:3:"url";s:' + str(len(apply_url)) + ':"' + apply_url + '";}'
+
+            print(apply_url, "job urls")
 
             category_link = category.replace("https://remote.co/remote-jobs/", '')
             fcategory = category_link.replace('/', '')
@@ -222,8 +222,9 @@ def final_url(request):
                 values = JobDetail.objects.create(job_title=job_title, job_address=location, job_created_at=posted_date,
                                                   type=job_types, job_description=job_description,
                                                   company_name=company_name, company_website=company_website,
-                                                  price_per_hour=price_per_hour, salary=salary,company_logo=logo_url,
-                                                  category=fcategory, job_link=jobs, wpjobboard_am_data=apply_link, company_location=company_location)
+                                                  price_per_hour=price_per_hour, salary=salary, company_logo=logo_url,
+                                                  category=fcategory, job_link=jobs, wpjobboard_am_data=apply_link,
+                                                  company_location=company_location)
                 values.save()
             else:
                 print("Data Already Exists !!")
@@ -232,11 +233,6 @@ def final_url(request):
 
         current_category_index += 1
     return HttpResponse("Web scraping completed!")
-
-
-
-
-
 
 
 #####################################scrapy##################################################
