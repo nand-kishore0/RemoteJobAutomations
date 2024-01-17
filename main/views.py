@@ -194,7 +194,6 @@ def final_url(request):
             company_website_element = soup_job.select_one('div.company_sm div.links_sm a[href]')
             company_website = company_website_element['href'] if company_website_element else "Not Available"
 
-            print(company_website, "Company Website Has been working !!")
 
             logo_tag = soup_job.find_all('img', class_='job_company_logo')
             for logos in logo_tag:
@@ -211,7 +210,6 @@ def final_url(request):
             apply_url = apply_link_element.get('href') if apply_link_element else "Not Available"
             apply_link = 'a:1:{s:3:"url";s:' + str(len(apply_url)) + ':"' + apply_url + '";}'
 
-            print(apply_url, "job urls")
 
             category_link = category.replace("https://remote.co/remote-jobs/", '')
             fcategory = category_link.replace('/', '')
