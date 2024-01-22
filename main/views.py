@@ -182,7 +182,7 @@ def final_url(request):
 
             # job Description
             job_description_element = soup_job.select_one('div.job_description')
-            job_description = str(job_description_element) if job_description_element else "Not Available"
+            job_description = job_description_element.prettify() if job_description_element else "Not Available"
 
             # job_description_element = soup_job.select_one('div.job_description')
             # job_description = job_description_element.findAll() if job_description_element else "Not Available"
@@ -193,7 +193,6 @@ def final_url(request):
 
             company_website_element = soup_job.select_one('div.company_sm div.links_sm a[href]')
             company_website = company_website_element['href'] if company_website_element else "Not Available"
-
 
             logo_tag = soup_job.find_all('img', class_='job_company_logo')
             for logos in logo_tag:
@@ -209,7 +208,6 @@ def final_url(request):
             apply_link_element = soup_job.find('a', id='applyLink')
             apply_url = apply_link_element.get('href') if apply_link_element else "Not Available"
             apply_link = 'a:1:{s:3:"url";s:' + str(len(apply_url)) + ':"' + apply_url + '";}'
-
 
             category_link = category.replace("https://remote.co/remote-jobs/", '')
             fcategory = category_link.replace('/', '')

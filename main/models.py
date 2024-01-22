@@ -46,13 +46,15 @@ class JobDetail(models.Model):
     twitter_link = models.CharField(max_length=1000, blank=True, null=True)
     linkedin_link = models.CharField(max_length=1000, blank=True, null=True)
     facebook_link = models.CharField(max_length=1000, blank=True, null=True)
-    job_description = RichTextField(default=None, blank=True, null=True) 
-    
+    job_description = RichTextField(default=None, blank=True, null=True)
+
     price_per_hour = models.CharField(max_length=1000, blank=True, null=True)
     salary = models.CharField(max_length=1000, blank=True, null=True)
     job_link = models.CharField(max_length=1000, blank=True, null=True)
     create_at = models.DateTimeField(auto_now_add=True)
-    
 
     def __str__(self):
         return self.job_title
+
+    class Meta:
+        ordering = ('-create_at',)
