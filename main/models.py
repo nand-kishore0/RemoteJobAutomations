@@ -47,7 +47,7 @@ class JobDetail(models.Model):
     linkedin_link = models.CharField(max_length=1000, blank=True, null=True)
     facebook_link = models.CharField(max_length=1000, blank=True, null=True)
     job_description = RichTextField(default=None, blank=True, null=True)
-
+    job_description_format = models.CharField(max_length=20, default="html")
     price_per_hour = models.CharField(max_length=1000, blank=True, null=True)
     salary = models.CharField(max_length=1000, blank=True, null=True)
     job_link = models.CharField(max_length=1000, blank=True, null=True)
