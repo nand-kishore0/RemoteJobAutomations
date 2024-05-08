@@ -115,6 +115,11 @@ def request_url(request):
 ########################################working Code..#################################
 
 # Your imports and other parts of the code remain the same
+def get_posted_date(job_link):
+    response_job = requests.get(job_link)
+    soup_job = BeautifulSoup(response_job.content, 'html.parser')
+    posted_date_element = soup_job.select_one('div.date_tags time')
+    return posted_date_element['datetime'] if posted_date_element else "Not Available"
 
 def final_url(request):
     url = "https://remote.co/remote-jobs/"
@@ -148,6 +153,8 @@ def final_url(request):
 
         category_visited_links_list = list(category_visited_links)
         category_visited_links_length = len(category_visited_links_list)
+        category_visited_links_list.sort(key=lambda x: get_posted_date(x), reverse=True)
+
         current_job_index = 0
 
         while current_job_index < category_visited_links_length:
