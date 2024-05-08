@@ -156,8 +156,8 @@ def final_url(request):
         category_visited_links_list.sort(key=lambda x: get_posted_date(x), reverse=True)
 
         current_job_index = 0
-
-        while current_job_index < category_visited_links_length:
+        jobs_processed = 0
+        while current_job_index < category_visited_links_length and jobs_processed < 10:
             jobs = category_visited_links_list[current_job_index]
             response_job = requests.get(jobs)
             soup_job = BeautifulSoup(response_job.content, 'html.parser')
@@ -233,7 +233,9 @@ def final_url(request):
                 print("Data Already Exists !!")
 
             current_job_index += 1
-
+            jobs_processed += 1
+        if jobs_processed == 10:
+            time.sleep(15)
         current_category_index += 1
     return HttpResponse("Web scraping completed!")
 
